@@ -2,8 +2,10 @@ const express = require('express');
 const router =require( './routes/notesRoutes')
 const {connectDB} = require( './config/db' );
 const app = express();
+const rateLimiter = require("./config/upstash")
 
 connectDB().then(res=>console.log("Ok"));
+app.use(rateLimiter);
 app.use(express.json());
 app.use('/api/notes',router)
 // app.get('/api/notes', (req, res) => {
