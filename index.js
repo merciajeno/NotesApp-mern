@@ -4,7 +4,7 @@ const {connectDB} = require( './config/db' );
 const app = express();
 const rateLimiter = require("./config/upstash")
 
-connectDB().then(res=>console.log("Ok"));
+
 app.use(rateLimiter);
 app.use(express.json());
 app.use('/api/notes',router)
@@ -23,7 +23,9 @@ app.use('/api/notes',router)
 // app.delete('/api/notes:id', (req, res) => {
 //     res.status(200).json({"message": "Notes deleted successfully"})
 // })
-
-app.listen(3000,(req, res) => {
-    console.log('Server is running on port 3000');
-})
+connectDB().then(()=> {
+        app.listen(3000, (req, res) => {
+            console.log('Server is running on port 3000');
+        })
+    }
+)
